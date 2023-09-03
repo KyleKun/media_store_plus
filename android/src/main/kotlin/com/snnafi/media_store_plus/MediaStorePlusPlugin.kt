@@ -757,7 +757,7 @@ class MediaStorePlusPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
             return true
         } else if (requestCode == 994) {
             if (resultCode == Activity.RESULT_OK) {
-                deleteFileUsingUri(this.uriString)
+                deleteFileUsingUri(this.uriString, false)
             } else {
                 result.success(false)
             }
