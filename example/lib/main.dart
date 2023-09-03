@@ -12,7 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 final mediaStorePlugin = MediaStore();
 
 void main() async {
-  await WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   // From API 33, we request photos, audio, videos permission to read these files. This the new way
   // From API 29, we request storage permission only to read access all files
   // API lower than 30, we request storage permission to read & write access access all files
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
               TextSpan(text: 'Running on: ', children: [
                 TextSpan(
                     text: _platformSDKVersion.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     )),
               ]),
@@ -103,7 +103,7 @@ class _MyAppState extends State<MyApp> {
             const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'Save file in...',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
@@ -112,52 +112,47 @@ class _MyAppState extends State<MyApp> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return ImageSaveScreen();
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return const ImageSaveScreen();
                 }));
               },
-              child: Text("Image Folder"),
+              child: const Text("Image Folder"),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return AudioSaveScreen(
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return const AudioSaveScreen(
                     dirType: DirType.audio,
                   );
                 }));
               },
-              child: Text("Audio Folder"),
+              child: const Text("Audio Folder"),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return VideoSaveScreen();
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return const VideoSaveScreen();
                 }));
               },
-              child: Text("Video Folder"),
+              child: const Text("Video Folder"),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                   return const AudioSaveScreen(
                     dirType: DirType.download,
                   );
                 }));
               },
-              child: Text("Download Folder"),
+              child: const Text("Download Folder"),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return ReadWriteScreenAPI33OrUp();
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return const ReadWriteScreenAPI33OrUp();
                 }));
               },
-              child: Text("Read/Write API 33 or Upper Folder"),
+              child: const Text("Read/Write API 33 or Upper Folder"),
             ),
           ],
         ),

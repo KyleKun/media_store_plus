@@ -71,8 +71,7 @@ class MethodChannelMediaStore extends MediaStorePlatform {
 
   @override
   Future<Uri?> getUriFromFilePath({required String path}) async {
-    final uriString =
-        await methodChannel.invokeMethod<String?>('getUriFromFilePath', {
+    final uriString = await methodChannel.invokeMethod<String?>('getUriFromFilePath', {
       "filePath": path,
     });
     if (uriString != null) {
@@ -82,10 +81,8 @@ class MethodChannelMediaStore extends MediaStorePlatform {
   }
 
   @override
-  Future<DocumentTree?> requestForAccess(
-      {required String? initialRelativePath}) async {
-    final string =
-        await methodChannel.invokeMethod<String>('requestForAccess', {
+  Future<DocumentTree?> requestForAccess({required String? initialRelativePath}) async {
+    final string = await methodChannel.invokeMethod<String>('requestForAccess', {
       "initialRelativePath": initialRelativePath,
     });
     var jsonString = (string ?? "");
@@ -97,8 +94,7 @@ class MethodChannelMediaStore extends MediaStorePlatform {
   }
 
   @override
-  Future<bool> editFile(
-      {required String uriString, required tempFilePath}) async {
+  Future<bool> editFile({required String uriString, required tempFilePath}) async {
     final status = await methodChannel.invokeMethod<bool>('editFile', {
       "contentUri": uriString,
       "tempFilePath": tempFilePath,
@@ -107,29 +103,29 @@ class MethodChannelMediaStore extends MediaStorePlatform {
   }
 
   @override
-  Future<bool> deleteFileUsingUri({required String uriString}) async {
-    final status = await methodChannel
-        .invokeMethod<bool>('deleteFileUsingUri', {"contentUri": uriString});
+  Future<bool> deleteFileUsingUri(
+      {required String uriString, required bool forceUseMediaStore}) async {
+    final status = await methodChannel.invokeMethod<bool>(
+        'deleteFileUsingUri', {"contentUri": uriString, "forceUseMediaStore": forceUseMediaStore});
     return status ?? false;
   }
 
   @override
   Future<bool> isFileDeletable({required String uriString}) async {
-    final status = await methodChannel
-        .invokeMethod<bool>('isFileDeletable', {"contentUri": uriString});
+    final status =
+        await methodChannel.invokeMethod<bool>('isFileDeletable', {"contentUri": uriString});
     return status ?? false;
   }
 
   @override
   Future<bool> isFileWritable({required String uriString}) async {
-    final status = await methodChannel
-        .invokeMethod<bool>('isFileWritable', {"contentUri": uriString});
+    final status =
+        await methodChannel.invokeMethod<bool>('isFileWritable', {"contentUri": uriString});
     return status ?? false;
   }
 
   @override
-  Future<bool> readFileUsingUri(
-      {required String uriString, required tempFilePath}) async {
+  Future<bool> readFileUsingUri({required String uriString, required tempFilePath}) async {
     final status = await methodChannel.invokeMethod<bool>('readFileUsingUri', {
       "contentUri": uriString,
       "tempFilePath": tempFilePath,

@@ -53,8 +53,7 @@ abstract class MediaStorePlatform extends PlatformInterface {
     throw UnimplementedError('getUriFromFilePath() has not been implemented.');
   }
 
-  Future<DocumentTree?> requestForAccess(
-      {required String? initialRelativePath}) {
+  Future<DocumentTree?> requestForAccess({required String? initialRelativePath}) {
     throw UnimplementedError('requestForAccess() has not been implemented.');
   }
 
@@ -62,7 +61,7 @@ abstract class MediaStorePlatform extends PlatformInterface {
     throw UnimplementedError('editFile() has not been implemented.');
   }
 
-  Future<bool> deleteFileUsingUri({required String uriString}) {
+  Future<bool> deleteFileUsingUri({required String uriString, required bool forceUseMediaStore}) {
     throw UnimplementedError('deleteFileUsingUri() has not been implemented.');
   }
 
@@ -74,8 +73,7 @@ abstract class MediaStorePlatform extends PlatformInterface {
     throw UnimplementedError('isFileWritable() has not been implemented.');
   }
 
-  Future<bool> readFileUsingUri(
-      {required String uriString, required tempFilePath}) {
+  Future<bool> readFileUsingUri({required String uriString, required tempFilePath}) {
     throw UnimplementedError('readFileUsingUri() has not been implemented.');
   }
 

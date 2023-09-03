@@ -101,6 +101,7 @@ class MediaStorePlusPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
         } else if (call.method == "deleteFileUsingUri") {
             deleteFileUsingUri(
                     call.argument("contentUri")!!,
+                    call.argument("forceUseMediaStore")!!,
             )
         } else if (call.method == "isFileDeletable") {
             result.success(
@@ -454,12 +455,16 @@ class MediaStorePlusPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
         }
     }
 
-    private fun deleteFileUsingUri(uriString: String) {
+    private fun deleteFileUsingUri(uriString: String, forceUseMediaStore: Boolean) {
         this.uriString = uriString
         val fileUri = Uri.parse(uriString)
         val contentResolver: ContentResolver = activity!!.applicationContext.getContentResolver()
         try {
-            DocumentsContract.deleteDocument(contentResolver, fileUri)
+            if (forceUseMediaStore) {
+                contentResolver.delete(fileUri, null, null)
+            } else {
+                DocumentsContract.deleteDocument(contentResolver, fileUri)
+            }
             result.success(true)
         } catch (e: Exception) {
             if (e is RecoverableSecurityException) {

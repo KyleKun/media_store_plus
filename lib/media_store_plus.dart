@@ -59,7 +59,7 @@ class MediaStore {
     String? relativePath,
   }) async {
     if (appFolder.isEmpty) {
-      throw AppFolderNotSetException(
+      throw const AppFolderNotSetException(
           "Set the folder location first using MediaStore.appFolder");
     }
 
@@ -75,14 +75,14 @@ class MediaStore {
         relativePath: relativePath.orAppFolder,
       );
     } else {
-      Directory directory = Directory(dirType.fullPath(
-          relativePath: relativePath.orAppFolder, dirName: dirName));
+      Directory directory =
+          Directory(dirType.fullPath(relativePath: relativePath.orAppFolder, dirName: dirName));
 
       await Directory(directory.path).create(recursive: true);
 
       String fileName = Uri.parse(tempFilePath).pathSegments.last.trim();
       File tempFile = File(tempFilePath);
-      File file = await tempFile.copy(directory.path + "/" + fileName);
+      File file = await tempFile.copy("${directory.path}/$fileName");
       return await file.exists();
     }
   }
@@ -103,7 +103,7 @@ class MediaStore {
     String? relativePath,
   }) async {
     if (appFolder.isEmpty) {
-      throw AppFolderNotSetException(
+      throw const AppFolderNotSetException(
           "Set the folder location first using MediaStore.appFolder");
     }
 
@@ -117,9 +117,9 @@ class MediaStore {
         relativePath: relativePath.orAppFolder,
       );
     } else {
-      Directory directory = Directory(dirType.fullPath(
-          relativePath: relativePath.orAppFolder, dirName: dirName));
-      File file = File(directory.path + "/" + fileName);
+      Directory directory =
+          Directory(dirType.fullPath(relativePath: relativePath.orAppFolder, dirName: dirName));
+      File file = File("${directory.path}/$fileName");
       if ((await file.exists())) {
         await file.delete();
       }
@@ -149,7 +149,7 @@ class MediaStore {
     String? relativePath,
   }) async {
     if (appFolder.isEmpty) {
-      throw AppFolderNotSetException(
+      throw const AppFolderNotSetException(
           "Set the folder location first using MediaStore.appFolder");
     }
 
@@ -163,11 +163,10 @@ class MediaStore {
         relativePath: relativePath.orAppFolder,
       );
     } else {
-      Directory directory = Directory(dirType.fullPath(
-          relativePath: relativePath.orAppFolder, dirName: dirName));
-      File file = File(directory.path + "/" + fileName);
-      return await MediaStorePlatform.instance
-          .getUriFromFilePath(path: file.path);
+      Directory directory =
+          Directory(dirType.fullPath(relativePath: relativePath.orAppFolder, dirName: dirName));
+      File file = File("${directory.path}/$fileName");
+      return await MediaStorePlatform.instance.getUriFromFilePath(path: file.path);
     }
   }
 
@@ -193,7 +192,7 @@ class MediaStore {
     String? relativePath,
   }) async {
     if (appFolder.isEmpty) {
-      throw AppFolderNotSetException(
+      throw const AppFolderNotSetException(
           "Set the folder location first using MediaStore.appFolder");
     }
 
@@ -208,11 +207,10 @@ class MediaStore {
       );
       return uri != null;
     } else {
-      Directory directory = Directory(dirType.fullPath(
-          relativePath: relativePath.orAppFolder, dirName: dirName));
-      File file = File(directory.path + "/" + fileName);
-      final uri =
-          await MediaStorePlatform.instance.getUriFromFilePath(path: file.path);
+      Directory directory =
+          Directory(dirType.fullPath(relativePath: relativePath.orAppFolder, dirName: dirName));
+      File file = File("${directory.path}/$fileName");
+      final uri = await MediaStorePlatform.instance.getUriFromFilePath(path: file.path);
       return uri != null;
     }
   }
@@ -230,10 +228,8 @@ class MediaStore {
   /// For open in Music/Quran, [initialRelativePath] = "Music/Quran"
   ///
   /// Read more about it from here: https://developer.android.com/training/data-storage/shared/documents-files#grant-access-directory
-  Future<DocumentTree?> requestForAccess(
-      {required String? initialRelativePath}) {
-    return MediaStorePlatform.instance
-        .requestForAccess(initialRelativePath: initialRelativePath);
+  Future<DocumentTree?> requestForAccess({required String? initialRelativePath}) {
+    return MediaStorePlatform.instance.requestForAccess(initialRelativePath: initialRelativePath);
   }
 
   /// It will edit the file using [Uri] from the given [uriString] if exist. Return `true` upon editing.
@@ -242,14 +238,14 @@ class MediaStore {
   /// This method then copy file contents from this path and edit it in the particularly location using [MediaStore].
   /// Then it will delete the temporary file.
   Future<bool> editFile({required String uriString, required tempFilePath}) {
-    return MediaStorePlatform.instance
-        .editFile(uriString: uriString, tempFilePath: tempFilePath);
+    return MediaStorePlatform.instance.editFile(uriString: uriString, tempFilePath: tempFilePath);
   }
 
   /// It will delete existing file using [Uri] from the given [uriString] if exist. Return `true` if deleted or return false
   /// __It will request for user permission if app hasn't permission to delete that file__.
-  Future<bool> deleteFileUsingUri({required String uriString}) {
-    return MediaStorePlatform.instance.deleteFileUsingUri(uriString: uriString);
+  Future<bool> deleteFileUsingUri({required String uriString, required bool forceUseMediaStore}) {
+    return MediaStorePlatform.instance
+        .deleteFileUsingUri(uriString: uriString, forceUseMediaStore: forceUseMediaStore);
   }
 
   /// Return `true` if the file from the given [uriString] is deletable
@@ -266,8 +262,7 @@ class MediaStore {
   /// __It will request for user permission if app hasn't permission to read the file.__
   /// To use this method, first create a new file in a temporary location, like app data folder then provide this path.
   /// This method then copy file contents to this temporary path to read directy by [File].
-  Future<bool> readFileUsingUri(
-      {required String uriString, required tempFilePath}) {
+  Future<bool> readFileUsingUri({required String uriString, required tempFilePath}) {
     return MediaStorePlatform.instance
         .readFileUsingUri(uriString: uriString, tempFilePath: tempFilePath);
   }
@@ -299,7 +294,7 @@ class MediaStore {
     String? relativePath,
   }) async {
     if (appFolder.isEmpty) {
-      throw AppFolderNotSetException(
+      throw const AppFolderNotSetException(
           "Set the folder location first using MediaStore.appFolder");
     }
 
@@ -314,9 +309,9 @@ class MediaStore {
         relativePath: relativePath.orAppFolder,
       );
     } else {
-      Directory directory = Directory(dirType.fullPath(
-          relativePath: relativePath.orAppFolder, dirName: dirName));
-      File file = File(directory.path + "/" + fileName);
+      Directory directory =
+          Directory(dirType.fullPath(relativePath: relativePath.orAppFolder, dirName: dirName));
+      File file = File("${directory.path}/$fileName");
       File tempFile = await file.copy(tempFilePath);
       return await tempFile.exists();
     }
